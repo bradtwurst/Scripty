@@ -4,11 +4,6 @@
         <name>Cake.Scripty</name>
     </assembly>
     <members>
-        <member name="T:Cake.Scripty.ScriptySettings">
-            <summary>
-            Tool settings
-            </summary>
-        </member>
         <member name="T:Cake.Scripty.ScriptyAliases">
             <summary>
             <para>Alias to evaluate C# scripts using Scripty</para>
@@ -65,6 +60,11 @@
         <member name="M:Cake.Scripty.ScriptyRunner.GetToolExecutableNames">
             <summary>Gets the possible names of the tool executable.</summary>
             <returns>The tool executable name.</returns>
+        </member>
+        <member name="T:Cake.Scripty.ScriptySettings">
+            <summary>
+            Tool settings
+            </summary>
         </member>
     </members>
 </doc>
