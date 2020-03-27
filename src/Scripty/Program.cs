@@ -101,7 +101,7 @@ namespace Scripty
             }
 
             ScriptEngine engine = new ScriptEngine(projectFilePath, solutionFilePath,
-							_settings.Properties, _settings.CustomProperties);
+                            _settings.Properties, _settings.CustomProperties);
 
             // Get script files if none were specified
             IReadOnlyList<string> finalScriptFilePaths;
