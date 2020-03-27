@@ -10,8 +10,8 @@ namespace Scripty.Core.Tests.Output
     [TestFixture]
     public class EngineFixture
     {
-        static readonly string SolutionFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../SampleSolution/Sample.sln");
-        static readonly string ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../SampleSolution/ProjA/ProjA.csproj");
+        static readonly string SolutionFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/SampleSolution/Sample.sln");
+        static readonly string ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/SampleSolution/ProjA/ProjA.csproj");
         static readonly string BinDirectory = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/Output");
 
         const string BuildPropertiesScript = "BuildProperties.csx";

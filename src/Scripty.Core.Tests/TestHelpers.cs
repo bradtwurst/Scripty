@@ -18,7 +18,8 @@
         /// <param name="testFileSubfolder">The test file subfolder relative to the project root.</param>
         public TestHelpers(string testFileSubfolder = "")
         {
-            ProjectFilePath = Path.Combine(GetProjectRootFolder(), "Scripty.Core.Tests.csproj");
+            ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}");
+
             _testFileSubfolder = testFileSubfolder;
         }
 
@@ -42,14 +43,9 @@
         }
 
 
-        public static string GetProjectRootFolder()
-        {
-            return Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../");
-        }
-
         public string GetTestFileSubFolder()
         {
-            return Path.Combine(GetProjectRootFolder(), _testFileSubfolder);
+            return Path.Combine(ProjectFilePath, _testFileSubfolder);
         }
 
         public string GetTestFilePath(string fileName)

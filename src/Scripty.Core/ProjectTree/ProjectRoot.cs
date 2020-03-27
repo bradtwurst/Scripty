@@ -65,6 +65,7 @@ namespace Scripty.Core.ProjectTree
                     lock (_projectLock)
                     {
                         _workspace = MSBuildWorkspace.Create(_properties);
+                        _workspace.LoadMetadataForReferencedProjects = true;
                     }
                 }
                 return _workspace;
@@ -99,6 +100,13 @@ namespace Scripty.Core.ProjectTree
                         }
                     }
                 }
+
+                //used for debugging of project load issues
+                //var diagnostics = _workspace.Diagnostics;
+                //foreach (var diagnostic in diagnostics)
+                //{
+                //    System.Diagnostics.Debug.WriteLine(diagnostic.Message);
+                //}
                 return _analysisProject;
             }
         }

@@ -27,7 +27,8 @@ ipch
 *.pdb
 /*.~vsd
 *UpgradeWizard*
-.vs/*
+**/.vs
+**/*.bak
 **/TestCsx/*.cs
 **/TestCsx/*.scriptytmp
 **/TestCsx/*.rewrite.*

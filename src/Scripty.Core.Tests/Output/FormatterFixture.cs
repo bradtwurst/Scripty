@@ -8,7 +8,7 @@ namespace Scripty.Core.Tests.Output
     [TestFixture]
     public class FormatterFixture
     {
-        static readonly string ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../Scripty.Core.Tests.csproj");
+        static readonly string ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/SampleSolution/ProjA/ProjA.csproj");
         static readonly string BinDirectory = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/Output");
 
         const string FakeFormatterScript = "FakeFormatter.csx";
