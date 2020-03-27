@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -9,9 +11,10 @@ namespace Scripty.MsBuild.Tests
     [TestFixture]
     public class ScriptyTaskFixture
     {
-        static readonly string SolutionFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../SampleSolution/Sample.sln");
-        static readonly string ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../SampleSolution/Proj/Proj.csproj");
+        static readonly string SolutionFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/SampleSolution/Sample.sln");
+        static readonly string ProjectFilePath = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/SampleSolution/Proj/Proj.csproj");
         static readonly string ScriptyAssembly = Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/Scripty.MsBuild.dll");
+        static readonly string _vswhere = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tools", "vswhere.exe");
 
         string _msbuild;
         string _output;
@@ -25,25 +28,27 @@ namespace Scripty.MsBuild.Tests
 
         private static string FindMsBuild()
         {
-            foreach (var v in new[] { "15.0", "14.0", "12.0", "4.0" })
+            var args = @"-latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe";
+            var info = new ProcessStartInfo(_vswhere, args)
             {
-                string exe = null;
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
 
-                using (var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey($@"SOFTWARE\Microsoft\MSBuild\ToolsVersions\{v}"))
-                {
-                    if (key != null)
-                    {
-                        exe = (string) key.GetValue("MSBuildToolsPath");
-                    }
-                }
+            var output = new List<string>();
+            Process p = new Process();
+            p.StartInfo = info;
+            p.OutputDataReceived += (s, e) => output.Add(e.Data);
+            p.ErrorDataReceived += (s, e) => output.Add(e.Data);
+            p.Start();
+            p.BeginOutputReadLine();
+            p.WaitForExit();
 
-                if (exe != null)
-                {
-                    return exe + "msbuild.exe";
-                }
-            }
-
-            throw new ApplicationException("Could not find the location of MSBuild.");
+            var exe = output.FirstOrDefault(f => File.Exists(f));
+            
+            return exe ?? throw new ApplicationException("Could not find the location of MSBuild.");
         }
 
         [SetUp]
